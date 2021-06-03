@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./stylesheets/main.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Static Decooration Header, doesn't need any special js-->
+        <header>
+            <h1>Todo List</h1>
+            <h3> ~ antecomp ~ </h3>
+        </header>
+        <div class="todo">
+            <div class="sidebar">
+                <hr>
+                <h3>Lists</h3>
+                <br>
+                <ul>
+                    <li>Default List</li>
+                    <li>List with a long name</li>
+                    <li>Another list</li>
+                    <li>School</li>
+                    <li class="active">Active List</li>
+                    <li>Work</li>
+                    <li>Shopping List</li>
+                    <li>Bucket List</li>
+                    <li>List of CSS selectors</li>
+                    <li>Odin lessons</li>
+                    <li id="listaddname">
+                    <!-- Form must have return false to prevent reload -->
+                    <form onsubmit="alert(`submitted`); return false">
+                        <input placeholder="New List Name" type="text">
+                    </form>
+                    </li>
+                    <!-- Maybe make listadd a button inside form that invokes a submit function???-->
+                    <li id="listadd">+</li>
+                </ul>
+            </div>
+            <div class="main">
+                <h2>Active List Name</h2>
+                <!-- Tasks Lists Starts Here-->
+                <div class="task">
+                    <div class="taskleft">
+                        <input type="checkbox">
+                    </div>
+                    <div class="taskcenter">
+                        <h3 class="taskname">Take out the trash</h3>
+                        <p class="desc">Please take out the trash its been 6 days</p>
+                        <p class="duedate">Due: X/XX/XX</p>
+                    </div>
+                    <div class="taskright"> ✗ </div>
+                </div>
+                <!------------------------------------------------------->
+                <div class="task">
+                    <div class="taskleft">
+                        <input type="checkbox">
+                    </div>
+                    <div class="taskcenter">
+                        <h3 class="taskname">Write the todo list js code</h3>
+                        <p class="desc">Once the CSS looks pretty :)</p>
+                        <p class="duedate">Due: X/XX/XX</p>
+                    </div>
+                    <div class="taskright"> ✗ </div>
+                </div>
+                <!------------------------------------------------------->
+                <div class="task">
+                    <div class="taskleft">
+                        <input type="checkbox">
+                    </div>
+                    <div class="taskcenter">
+                        <h3 class="taskname">Write the todo list js code</h3>
+                        <p class="desc">Once the CSS looks pretty :)</p>
+                        <p class="duedate">Due: X/XX/XX</p>
+                    </div>
+                    <div class="taskright"> ✗ </div>
+                </div>
+                <!------------------------------------------------------->
+                <div class="task">
+                    <div class="taskleft">
+                        <input type="checkbox">
+                    </div>
+                    <div class="taskcenter">
+                        <h3 class="taskname">Write the todo list js code</h3>
+                        <p class="desc">Once the CSS looks pretty :)</p>
+                        <p class="duedate">Due: X/XX/XX</p>
+                    </div>
+                    <div class="taskright"> ✗ </div>
+                </div>
+                <!------------------------------------------------------->
+                <div class="task">
+                    <div class="taskleft">
+                        <input type="checkbox">
+                    </div>
+                    <div class="taskcenter">
+                        <h3 class="taskname">Write the todo list js code</h3>
+                        <p class="desc">Once the CSS looks pretty :)</p>
+                        <p class="duedate">Due: X/XX/XX</p>
+                    </div>
+                    <div class="taskright"> ✗ </div>
+                </div>
+                <!------------------------------------------------------->
+                <div class="task">
+                    <div class="taskleft">
+                        <input type="checkbox">
+                    </div>
+                    <div class="taskcenter">
+                        <h3 class="taskname">Write the todo list js code</h3>
+                        <p class="desc">Once the CSS looks pretty :)</p>
+                        <p class="duedate">Due: X/XX/XX</p>
+                    </div>
+                    <div class="taskright"> ✗ </div>
+                </div>
+                <!------------------------------------------------------->
+                <div class="task">
+                    <div class="taskleft">
+                        <input type="checkbox">
+                    </div>
+                    <div class="taskcenter">
+                        <h3 class="taskname">Write the todo list js code</h3>
+                        <p class="desc">Once the CSS looks pretty :)</p>
+                        <p class="duedate">Due: X/XX/XX</p>
+                    </div>
+                    <div class="taskright"> ✗ </div>
+                </div>
+                <!------------------------------------------------------->
+                <div class="task">
+                    <div class="taskleft">
+                        <input type="checkbox">
+                    </div>
+                    <div class="taskcenter">
+                        <h3 class="taskname">Write the todo list js code</h3>
+                        <p class="desc">Once the CSS looks pretty :)</p>
+                        <p class="duedate">Due: X/XX/XX</p>
+                    </div>
+                    <div class="taskright"> ✗ </div>
+                </div>
+                <!------------------------------------------------------->
+                <div class="task">
+                    <div class="taskleft">
+                        <input type="checkbox">
+                    </div>
+                    <div class="taskcenter">
+                        <h3 class="taskname">Write the todo list js code</h3>
+                        <p class="desc">Once the CSS looks pretty :)</p>
+                        <p class="duedate">Due: X/XX/XX</p>
+                    </div>
+                    <div class="taskright"> ✗ </div>
+                </div>
+                <!------------------------------------------------------->
+                <div class="task">
+                    <div class="taskleft">
+                        <input type="checkbox">
+                    </div>
+                    <div class="taskcenter">
+                        <h3 class="taskname">Write the todo list js code</h3>
+                        <p class="desc">Once the CSS looks pretty :)</p>
+                        <p class="duedate">Due: X/XX/XX</p>
+                    </div>
+                    <div class="taskright"> ✗ </div>
+                </div>
+                <!-- End Of Tasks List -->
+                <button id="newtask">+</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
