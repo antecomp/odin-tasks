@@ -34,10 +34,9 @@
                     <!-- Form must have return false to prevent reload -->
                     <form onsubmit="alert(`submitted`); return false">
                         <input placeholder="New List Name" type="text">
+                        <button id="listadd">+</button>
                     </form>
                     </li>
-                    <!-- Maybe make listadd a button inside form that invokes a submit function???-->
-                    <li id="listadd">+</li>
                 </ul>
             </div>
             <div class="main">
@@ -67,13 +66,13 @@
                     <div class="taskright"> ✗ </div>
                 </div>
                 <!------------------------------------------------------->
-                <div class="task">
+                <div class="task priohigh">
                     <div class="taskleft">
                         <input type="checkbox">
                     </div>
                     <div class="taskcenter">
-                        <h3 class="taskname">Write the todo list js code</h3>
-                        <p class="desc">Once the CSS looks pretty :)</p>
+                        <h3 class="taskname">High Prio Task</h3>
+                        <p class="desc">Ooo important!</p>
                         <p class="duedate">Due: X/XX/XX</p>
                     </div>
                     <div class="taskright"> ✗ </div>

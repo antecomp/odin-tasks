@@ -11,6 +11,7 @@
     --textc: white;
     --fadedtextc: rgb(125, 135, 145);
     --empc: #3670a0;
+    --hic: rgba(107, 171, 197, 0.555);
 }
 
 body {
@@ -19,7 +20,30 @@ body {
     font-family: Comfortaa;
     /* Prevent I-beam over normal text, looks bad */
     cursor: default;
+    scrollbar-width: thin;
+    scrollbar-color: var(--empc) black;
 }
+
+::-webkit-scrollbar {
+    width: 4px;
+    background-color: #111111;
+}
+
+::-webkit-scrollbar-thumb {
+    color: var(--empc);
+    background-color: var(--empc);
+}
+
+::selection {
+    background: var(--hic);
+    color: black;
+}
+
+  ::-moz-selection {
+    background: var(--hic);
+    color: white;
+ }
+
 
 .container {
     height: 100vh;
@@ -71,15 +95,29 @@ li.active {
     border-left: solid 3px var(--empc);
 }
 
+form {
+    cursor: default;
+}
+
 #listadd {
-    background: var(--bglighter);
+    background: transparent;
     text-align: center;
     font-size: 1.4em;
-    transform: none !important;
+    color: var(--textc);
+    border: none;
+    /* transform: none !important; */
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    padding-top: 0.5ch;
+    transition: transform ease-in-out 0.2s;
+    cursor: pointer;
+    outline: none;
+    display: block;
 }
 
 #listadd:hover {
-    padding: initial;
+    
 }
 
 #listaddname {
@@ -96,6 +134,10 @@ li.active {
     font-family: Comfortaa;
     text-align: center;
     transition: padding ease-in-out 0.2s;
+    width: 98%;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%)
 }
 
 input[type="text"]:focus-within, input[type="text"]:hover  {
@@ -136,6 +178,18 @@ input[type="text"]:focus-within, input[type="text"]:hover  {
     align-items: center;
     background-color: var(--altbgc);
     border-radius: 17px 0 0 5px;
+}
+
+/* .priohigh .taskleft, .priohigh .taskright {
+    background: #691323;
+}
+
+.priohigh .taskcenter {
+    background: #8f1e32;
+} */
+
+.priohigh .taskname {
+    color: rgb(216, 24, 65);
 }
 
 /* I hate checkboxes */
@@ -193,6 +247,12 @@ input[type="text"]:focus-within, input[type="text"]:hover  {
     color: red;
     display: flex;
     align-items: center;
+    transition: background-color ease-in-out 0.2s, color ease-in-out 0.2s;
+}
+
+.taskright:hover {
+    background-color: rgb(112, 25, 25);
+    color: black;
 }
 
 #newtask {
