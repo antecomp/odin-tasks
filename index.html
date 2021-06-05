@@ -5,7 +5,65 @@
 	<title></title>
 </head>
 <body>
-	<div id="content"></div>
+	<div id="content">
+		<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./stylesheets/main.css">
+</head>
+<body>
+    <div id="promptcon" style="display:none">
+        <div id="newtaskprompt">
+            <button id="promptclose">✗</button>
+            <form id="newtaskform" onsubmit="return false">
+                Task Name: <br> <input type="text" name="newtaskname">
+                <br>
+                Description: <br> <input type="text" name="newtaskdesc">
+                <br>
+                Due <br> <input type="date" name="newtaskdue">
+                <button id="taskadd">Add Task</button>
+            </form>
+        </div>
+    </div>
+    <div class="container">
+        <!-- Static Decooration Header, doesn't need any special js-->
+        <header>
+            <h1>Todo List</h1>
+            <h3> ~ antecomp ~ </h3>
+        </header>
+        <div class="todo">
+            <div class="sidebar">
+                <hr>
+                <h3>Lists</h3>
+                <br>
+                <ul id ="listcon">
+                    <!-- <li class="active">Default List</li> -->
+                </ul>
+                <ul>
+                    <li id="listaddname">
+                    <!-- Form must have return false to prevent reload -->
+                    <!-- <form onsubmit="alert(`submitted`); return false"> -->
+                    <form id="newlistform" onsubmit="return false">
+                        <input placeholder="New List Name" type="text" name="newlistname">
+                        <button id="listadd">+</button>
+                    </form>
+                    </li>
+                </ul>
+            </div>
+            <div class="main">
+                <h2>Active List Name</h2>
+                <!-- End Of Tasks List -->
+            </div>
+            <button id="newtask">+</button>
+        </div>
+    </div>
+		<button id="listinfo">Show Current List Info</button>
+        <!-- <button id="appendall">Append All Test</button> -->
+	</div>
 	<script src="main.js"></script>
 </body>
 </html>

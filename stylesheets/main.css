@@ -1,0 +1,388 @@
+* {
+    margin: 0;
+    box-sizing: border-box;
+    padding: 0;
+}
+
+:root {
+    --bgc: #03090e;
+    --altbgc: #09151f;
+    --bglighter: #0d1c29;
+    --textc: white;
+    --fadedtextc: rgb(125, 135, 145);
+    --empc: #3670a0;
+    --hic: rgba(107, 171, 197, 0.555);
+}
+
+body {
+    background: var(--bglighter);
+    color: var(--textc);
+    font-family: Comfortaa;
+    /* Prevent I-beam over normal text, looks bad */
+    cursor: default;
+    scrollbar-width: thin;
+    scrollbar-color: var(--empc) black;
+}
+
+::-webkit-scrollbar {
+    width: 4px;
+    background-color: #111111;
+}
+
+::-webkit-scrollbar-thumb {
+    color: var(--empc);
+    background-color: var(--empc);
+}
+
+::selection {
+    background: var(--hic);
+    color: black;
+}
+
+  ::-moz-selection {
+    background: var(--hic);
+    color: white;
+ }
+
+
+.container {
+    height: 100vh;
+    display: grid;
+    grid-template-rows: min-content auto;
+}
+
+.todo {
+    display: grid;
+    /* Based CSS Minmax for ultimate responsive design */
+    grid-template-columns: minmax(min-content, 1fr) minmax(auto, 4fr);
+    overflow: hidden; /* The sidebar and main should be scrollable, not the whole container */
+}
+
+.sidebar {
+    /* padding: 0 1ch; */
+    background: var(--bglighter);
+    overflow: auto;
+}
+
+.sidebar hr {
+    margin: 1ch;
+}
+
+.sidebar h3 {
+    text-align: center;
+}
+
+.sidebar ul {
+    list-style: none;
+}
+
+.sidebar ul li {
+    padding: 0.3ch;
+    cursor: pointer;
+    transition: all ease-in-out 0.2s;
+    background-color: var(--altbgc);
+    position: relative;
+}
+
+.somelist b {
+    position: absolute;
+    right: 3px;
+}
+
+.sidebar ul li:nth-child(even) {
+    background-color: var(--bglighter);
+}
+
+.sidebar ul li:hover {
+    padding-left: 1ch;
+}
+
+li.active {
+    border-left: solid 3px var(--empc);
+}
+
+form {
+    cursor: default;
+}
+
+#listadd {
+    background: transparent;
+    text-align: center;
+    font-size: 1.4em;
+    color: var(--textc);
+    border: none;
+    /* transform: none !important; */
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    padding-top: 0.5ch;
+    transition: transform ease-in-out 0.2s;
+    cursor: pointer;
+    outline: none;
+    display: block;
+}
+
+#listadd:hover {
+    
+}
+
+#listaddname {
+    padding-left: 0.3ch !important;
+    margin: 3ch 1ch 0 1ch;
+    background-color: transparent;
+}
+
+#listaddname input[type="text"] {
+    background-color: var(--bglighter);
+    color: var(--textc);
+    border: none;
+    border-bottom: solid var(--empc) 2px;
+    font-family: Comfortaa;
+    text-align: center;
+    transition: padding ease-in-out 0.2s;
+    width: 98%;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%)
+}
+
+#listaddname input[type="text"]:focus-within, #listaddname input[type="text"]:hover  {
+   padding-bottom: 3px;
+   outline: none;
+}
+
+.main {
+    padding: 2ch;
+    overflow-y: auto;
+    background-color: var(--bgc);
+    border-radius: 30px 0 0 0;
+    /* Everything should scale fine, this allows me to transform without
+    the stupid scrollbar showing up */
+    overflow-x: hidden;
+}
+
+.main h2 {
+    text-align: right;
+    margin-bottom: 2ch;
+}
+
+.main .task {
+    display: grid;
+    grid-template-columns: min-content auto min-content;
+    border-radius: 17px;
+    margin-bottom: 2ch;
+    transition: filter ease-in-out 0.2s;
+}
+
+.main .task:hover {
+    filter: brightness(1.3);
+}
+
+.taskleft {
+    padding: 1ch;
+    display: flex;
+    align-items: center;
+    background-color: var(--altbgc);
+    border-radius: 17px 0 0 5px;
+}
+
+/* .priohigh .taskleft, .priohigh .taskright {
+    background: #691323;
+}
+
+.priohigh .taskcenter {
+    background: #8f1e32;
+} */
+
+.priohigh .taskname {
+    color: rgb(216, 24, 65);
+}
+
+/* I hate checkboxes */
+/* hacked in from this: https://dev.to/kallmanation/styling-a-checkbox-with-only-css-3o3p */
+.taskleft > input[type="checkbox"] {
+    /* yes */
+    transform: scale(0.01);
+    cursor: pointer;
+  }
+  .taskleft > input[type="checkbox"]::before {
+    content: "";
+    display: inline-block;
+    vertical-align: bottom;
+    width: 1rem;
+    height: 1rem;
+    margin-right: 0.3rem;
+    border-radius: 10%;
+    border-style: solid;
+    border-width: 0.1rem;
+    border-color: var(--empc);
+    flex-shrink: 0;
+    /* yes */
+    transform: scale(98.5);
+  }
+  .taskleft > input[type="checkbox"]:checked::before {
+    content: "✓";
+    color: white;
+    text-align: center;
+    background: var(--empc);
+    border-color: var(--empc);
+  }
+
+.taskcenter {
+    padding: 2ch;
+    background-color: var(--bglighter);
+}
+
+.taskname {
+    color: mediumseagreen;
+}
+
+.desc {
+    color:rgb(125, 135, 145);
+}
+
+.duedate {
+    color:rgb(168, 179, 190)
+}
+
+.taskright {
+    padding: 1ch;
+    cursor: pointer;
+    background-color: var(--altbgc);
+    border-radius: 0 5px 17px 0;
+    color: red;
+    display: flex;
+    align-items: center;
+    transition: background-color ease-in-out 0.2s, color ease-in-out 0.2s;
+}
+
+.taskright:hover {
+    background-color: rgb(112, 25, 25);
+    color: black;
+}
+
+/* #newtask {
+    width: 90%;
+    background-color: var(--bglighter);
+    color: var(--textc);
+    border: none;
+    padding: 1ch;
+    border-radius: 10px;
+    transform: translateX(-50%);
+    position: relative;
+    left: 50%;
+    transition: filter ease-in-out 0.2s;
+    cursor: pointer;
+} */
+
+#newtask {
+    width: 5ch;
+    height: 5ch;
+    /* padding: 5ch; */
+    background-color: var(--bglighter);
+    color: var(--textc);
+    border: none;
+    padding: 2ch;
+    border-radius: 10px;
+    transform: translateX(-50%);
+    position: relative;
+    right: 5%;
+    transition: filter ease-in-out 0.2s;
+    cursor: pointer;
+    bottom: 5%;
+    position: fixed;
+}
+
+#newtask:hover {
+    filter:brightness(1.5);
+}
+
+header {
+    background: var(--bglighter);
+    width: 100%;
+    padding: 1ch;
+}
+
+header h3 {
+    color: var(--fadedtextc);
+    font-style: italic;
+    font-size: 1.05rem;
+}
+
+#promptcon {
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.397);
+    padding: 5ch;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    z-index: 32890328921390828390;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(8px);
+    display: none;
+}
+
+#newtaskprompt {
+    background-color: var(--altbgc);
+    padding: 8ch 3ch;
+    border: 9px var(--bglighter);
+    border-radius: 15px 5px 15px 5px;
+    position: relative;
+}
+
+#newtaskprompt input {
+    background: transparent;
+    border: none;
+    border-bottom: var(--empc) 2px solid;
+    outline: none;
+    font-size: 1.2rem;
+    margin-bottom: 2ch;
+    color: mediumseagreen;
+    width: 100%;
+    transition: width ease-in-out 0.2s;
+}
+
+#newtaskprompt input:hover, #newtaskprompt input:focus {
+    width: 105%;
+}
+
+#newtaskprompt textarea {
+    background-color: rgba(255, 255, 255, 0.055);
+    color: mediumseagreen;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    margin-bottom: 2ch;
+}
+
+#promptclose {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: transparent;
+    color: red;
+    font-size: 1.2rem;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+
+#taskadd {
+    outline: none;
+    border: none;
+    background-color: var(--bglighter);
+    color: mediumseagreen;
+    font-family: Comfortaa;
+    font-size: 1.1rem;
+    padding: 0.5ch;
+    /* margin: 0 auto; */
+    position: absolute;
+    right: 0;
+    bottom: 2ch;
+    transform: translateX(-50%);
+    border-radius: 5px;
+}
