@@ -1,7 +1,6 @@
-import {dom} from "./dom.js"
-
 let lists = {
     // default: [],
+    listDisplay: document.querySelector("#listcon"),
     activeList: "",
     listlist: [], // I love this stupid name
     addtask: function (listname, taskname, taskdesc, taskdue, taskprio) {
@@ -45,29 +44,8 @@ let lists = {
         // This whole section is a mess and I hate it, please make it less stroke inducing in the future
         let deletebutton = document.createElement("b")
         deletebutton.textContent = 'X'
-        deletebutton.addEventListener("click", () => {this.deleteList(listname, newlistitem)})
-        newlistitem.appendChild(deletebutton)
-        dom.listDisplay.appendChild(newlistitem)
-    },
-    changeList: function (listname) {
-        this.activeList = listname
-        this.wipeAll()
-        this.appendAll()
-        let stupidbs = document.querySelector(`.somelist[data-list="${listname}"]`)
-        this.highlightActiveList(stupidbs)
-        // To verify list content matches dom
-        console.log("List changed. New array below")
-        console.log(this[this.activeList])
-    },
-    // TASK HANDLING, MOVE TO DOM OBJECT LATER!!!
-    returnActiveTasks: function () {
-        return this[this.activeList];
-    },
-    appendTask: function (item) {
-        dom.mainEl.appendChild(item.renderSelf())
-    },
-    deleteList: function (listname, newlistitem) {
-        // DEPRACATED SMEHPRACATED IT STILL WERKS!!!!111
+        deletebutton.addEventListener("click", () => {
+            // DEPRACATED SMEHPRACATED IT STILL WERKS!!!!111
             // Dont call the change list method on click (parent event) (prevent ubbling)
             event.stopPropagation();
             // Remove From Object
@@ -90,15 +68,38 @@ let lists = {
             if (listname == this.activeList) {
                 this.changeList(this.listlist[0])
             }
+        })
+        newlistitem.appendChild(deletebutton)
+        this.listDisplay.appendChild(newlistitem);
+    },
+    changeList: function (listname) {
+        this.activeList = listname
+        this.wipeAll()
+        this.appendAll()
+        let stupidbs = document.querySelector(`.somelist[data-list="${listname}"]`)
+        this.highlightActiveList(stupidbs)
+        // To verify list content matches dom
+        console.log("List changed. New array below")
+        console.log(this[this.activeList])
+    },
+    // TASK HANDLING, MOVE TO DOM OBJECT LATER!!!
+    returnActiveTasks: function () {
+        return this[this.activeList];
+    },
+    appendTask: function (item) {
+        let mainEl = document.querySelector(".main")
+        mainEl.appendChild(item.renderSelf())
     },
     appendAll: function () {
+        let mainEl = document.querySelector(".main")
         this[this.activeList].forEach(item => {
-            dom.mainEl.appendChild(item.renderSelf())
+            mainEl.appendChild(item.renderSelf())
         });
     },
     wipeAll: function () {
-        while(dom.mainEl.firstChild) {
-            dom.mainEl.removeChild(dom.mainEl.firstChild);
+        let mainEl = document.querySelector(".main")
+        while(mainEl.firstChild) {
+            mainEl.removeChild(mainEl.firstChild);
         }
     }
 }
@@ -134,8 +135,6 @@ class task {
         taskleft.classList.add("taskleft")
         let completedbox = document.createElement("input")
         completedbox.setAttribute("type","checkbox")
-        // You will need to add a method for setting the checkbox based on the completed state
-        // Since re-rendering the card (such as switching lists) will remove the "checked" state of the box.
         completedbox.addEventListener("change", (e) => {this.togglecomplete(e)})
         taskleft.appendChild(completedbox)
         taskcontainer.appendChild(taskleft)
@@ -167,9 +166,6 @@ class task {
             // Oh that was easier than I thought. Remove from DOM
             taskcontainer.remove();
             // Remove from array -- https://stackoverflow.com/questions/6658223/javascript-item-splice-self-out-of-list
-            // You may want to add a function param that the list can pass itself as
-            // in lists: appendChild(item.renderSelf(this))
-            // in here: passedList <- from passed param.   passedList[passedList.activeList]....
             lists[lists.activeList].splice(lists[lists.activeList].indexOf(this), 1)
             // Verify array is clean
             console.log("Task deleted: New array below")

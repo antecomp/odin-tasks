@@ -19,7 +19,7 @@
     <div id="promptcon" style="display:none">
         <div id="newtaskprompt">
             <button id="promptclose">✗</button>
-            <form id="newtaskform" onsubmit="return false">
+            <form id="newtaskform" onsubmit="return false" autocomplete="off">
                 Task Name: <br> <input type="text" name="newtaskname">
                 <br>
                 Description: <br> <input type="text" name="newtaskdesc">
@@ -47,7 +47,7 @@
                     <li id="listaddname">
                     <!-- Form must have return false to prevent reload -->
                     <!-- <form onsubmit="alert(`submitted`); return false"> -->
-                    <form id="newlistform" onsubmit="return false">
+                    <form id="newlistform" onsubmit="return false" autocomplete="off">
                         <input placeholder="New List Name" type="text" name="newlistname">
                         <button id="listadd">+</button>
                     </form>
