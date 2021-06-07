@@ -26,11 +26,13 @@ let dom = {
         let inputtedname = element.elements["newtaskname"].value
         let inputteddesc = element.elements["newtaskdesc"].value
         let inputteddate = element.elements["newtaskdue"].value
+        let important = element.elements["importance"].checked
         // Still need radio to mark as important!!
-        lists.addtask(lists.activeList, inputtedname, inputteddesc, inputteddate, false)
+        lists.addtask(lists.activeList, inputtedname, inputteddesc, inputteddate, important)
         element.elements["newtaskname"].value = ""
         element.elements["newtaskdesc"].value = ""
         element.elements["newtaskdue"].value = ""
+        element.elements["importance"].checked = false
         this.toggleTaskForm();
         return false;
     },

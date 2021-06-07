@@ -10,7 +10,7 @@ lists.addtask(lists.activeList, "Second List Example", "Some Desc", "XXXX-XX-XX"
 lists.changeList("New List")
 
 
-lists.addtask(lists.activeList, "Example task", "example desc", "XXXX-XX-XX", true)
+lists.addtask(lists.activeList, "Important task", "example desc", "XXXX-XX-XX", true)
 lists.addtask(lists.activeList, "Another task", "anoher example desc", "XXXX-XX-XX", false)
 
 // Due to the method addtask uses to get the index, ALWAYS pass the activeList in,

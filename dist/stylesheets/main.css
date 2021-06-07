@@ -235,10 +235,17 @@ form {
 
 .taskname {
     color: mediumseagreen;
+    cursor: text;
 }
 
 .desc {
     color:rgb(125, 135, 145);
+    cursor: text;
+}
+
+.taskname:hover::after, .desc:hover::after {
+    content: "✎";
+    font-weight: lighter;
 }
 
 .duedate {
@@ -350,6 +357,11 @@ header h3 {
     width: 105%;
 }
 
+#newtaskprompt input[type="checkbox"] {
+    width: auto !important;
+    transform: scale(0.01); /* Hides box, scale up the ::after */
+}
+
 #newtaskprompt textarea {
     background-color: rgba(255, 255, 255, 0.055);
     color: mediumseagreen;
@@ -386,3 +398,28 @@ header h3 {
     transform: translateX(-50%);
     border-radius: 5px;
 }
+
+
+/* CSS is a programming language lole */
+#newtaskprompt input[type="checkbox"]:checked::after {
+    content: "Yes";
+    position: relative;
+    display: block;
+    left: 120%;
+    top: -25%;
+    transform: scale(100);
+    cursor: pointer;
+}
+#newtaskprompt input[type="checkbox"]::after {
+    content: "No";
+    position: relative;
+    display: block;
+    left: 120%;
+    top: -25%;
+    transform: scale(100);
+    cursor: pointer;
+}
+
+/* oh heck oh golly oh crud oh frick this trick doesn't work on firefox
+dfdsjkflfhshidifjdsihfjkdskjfbjkdshjkfhdsjkhfkjhdskfhuds
+fixxxxxx AAAAAAAAAAAAAAAAAAAAAAa */

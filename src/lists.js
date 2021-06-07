@@ -7,7 +7,7 @@ let lists = {
     addtask: function (listname, taskname, taskdesc, taskdue, taskprio) {
         // Pass This Objects Index Into the task param
         let passedIndex = this[this.activeList].length
-        let newTask = new task(taskname, taskdesc, taskdue, taskprio)
+        let newTask = new task(taskname, taskdesc, taskdue, taskprio, this[this.activeList])
         this[listname].push(newTask);
         this.appendTask(this[this.activeList][passedIndex])
     },
@@ -109,12 +109,13 @@ let lists = {
 
 class task {
     // Add ability to recieve index to be used in functions
-    constructor(name, desc, due, prio, index) {
+    constructor(name, desc, due, prio, list) {
             this.name = name // String
             this.desc = desc // String
             this.due = due   // String
             this.prio = prio // Boolean (High Prio or Not)
             this.completed = false
+            this.hostlist = list
     }
     togglecomplete(checkbox) {
         if(checkbox.target.checked) { 
@@ -124,9 +125,12 @@ class task {
        }
        // console.log(this.completed)
     }
+    // REPLACE THE TEXTBOX WITH A BUTTON THAT TOGGLE this.completed AND THEN HAVE renderSelf() 
+    // APPLY STRIKETHROUGH TO EVERYTHING IF ITS COMPLETED
     renderSelf(parent) {
         let taskcontainer = document.createElement("div")
         taskcontainer.classList.add("task")
+        if(this.prio) taskcontainer.classList.add("priohigh")
         // I hate this
         // Task left
         let taskleft = document.createElement("div")
@@ -147,11 +151,31 @@ class task {
         taskname.innerText = this.name
         taskname.classList.add("taskname")
         taskcenter.appendChild(taskname)
+        // EDIT TASKNAME
+        // https://stackoverflow.com/questions/1391278/contenteditable-change-events
+        taskname.contentEditable = true
+        const nameObserver = new MutationObserver((mutationRecords) => {
+            this.name = mutationRecords[0].target.data
+            // console.log(this.name)
+        })
+        nameObserver.observe(taskname, {
+            characterData: true,
+            subtree: true
+        })
         // -------
         let taskdesc = document.createElement("p")
         taskdesc.innerText = this.desc
         taskdesc.classList.add("desc")
         taskcenter.appendChild(taskdesc)
+        // EDIT DESC
+        taskdesc.contentEditable = true
+        const descObserver = new MutationObserver((mutationRecords) => {
+            this.desc = mutationRecords[0].target.data
+        })
+        descObserver.observe(taskdesc, {
+            characterData: true,
+            subtree: true
+        })
         // ---------
         let taskdue = document.createElement("p")
         taskdue.innerText = this.due
@@ -170,10 +194,10 @@ class task {
             // You may want to add a function param that the list can pass itself as
             // in lists: appendChild(item.renderSelf(this))
             // in here: passedList <- from passed param.   passedList[passedList.activeList]....
-            lists[lists.activeList].splice(lists[lists.activeList].indexOf(this), 1)
+            this.hostlist.splice(this.hostlist.indexOf(this), 1)
             // Verify array is clean
-            console.log("Task deleted: New array below")
-            console.log(lists[lists.activeList])
+            // console.log("Task deleted: New array below")
+            // console.log(lists[lists.activeList])
         })
         taskcontainer.appendChild(taskright)
         return taskcontainer;
