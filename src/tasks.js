@@ -1,4 +1,5 @@
 import {lists, UserLists} from './lists.js'
+import { lstorage } from './local.js';
 
 class task {
     // Add ability to recieve index to be used in functions
@@ -20,8 +21,6 @@ class task {
             }
             console.log(this.completed)
         }
-    // REPLACE THE TEXTBOX WITH A BUTTON THAT TOGGLE this.completed AND THEN HAVE renderSelf() 
-    // APPLY STRIKETHROUGH TO EVERYTHING IF ITS COMPLETED
     renderSelf(parent) {
         let taskcontainer = document.createElement("div")
         taskcontainer.classList.add("task")
@@ -34,7 +33,7 @@ class task {
         taskleft.classList.add("taskleft")
         taskleft.addEventListener("click", () => {
             this.togglecomplete(taskcontainer)
-            lists.saveToLocal()
+            lstorage.saveToLocal()
         })
         taskcontainer.appendChild(taskleft)
         // Task Center
@@ -51,7 +50,7 @@ class task {
         const nameObserver = new MutationObserver((mutationRecords) => {
             this.name = mutationRecords[0].target.data
             // console.log(this.name)
-            lists.saveToLocal()
+            lstorage.saveToLocal()
         })
         nameObserver.observe(taskname, {
             characterData: true,
@@ -66,7 +65,7 @@ class task {
         taskdesc.contentEditable = true
         const descObserver = new MutationObserver((mutationRecords) => {
             this.desc = mutationRecords[0].target.data
-            lists.saveToLocal()
+            lstorage.saveToLocal()
         })
         descObserver.observe(taskdesc, {
             characterData: true,
@@ -94,7 +93,7 @@ class task {
             // Verify array is clean
             // console.log("Task deleted: New array below")
             // console.log(lists[lists.activeList])
-            lists.saveToLocal()
+            lstorage.saveToLocal()
         })
         taskcontainer.appendChild(taskright)
         return taskcontainer;

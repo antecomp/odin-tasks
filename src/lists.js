@@ -1,5 +1,6 @@
 import {dom} from "./dom.js"
 import {task} from "./tasks.js"
+import { lstorage } from './local.js';
 
 let lists = {
     // default: [],
@@ -11,7 +12,7 @@ let lists = {
         let newTask = new task(taskname, taskdesc, taskdue, taskprio, UserLists[this.activeList], taskcomplete)
         UserLists[listname].push(newTask);
         this.appendTask(UserLists[this.activeList][passedIndex])
-        this.saveToLocal()
+        lstorage.saveToLocal()
     },
     newlist: function (listname) {
         if(!UserLists[listname]) {
@@ -24,7 +25,7 @@ let lists = {
         } else {
             alert("List Already Exists")
         }
-        this.saveToLocal()
+        lstorage.saveToLocal()
     },
     highlightActiveList: function (activeitem) {
         let alllistitems = document.querySelectorAll(".somelist")
@@ -45,13 +46,12 @@ let lists = {
         })
         // Highlight on creation too
         this.highlightActiveList(newlistitem);
-        // This whole section is a mess and I hate it, please make it less stroke inducing in the future
         let deletebutton = document.createElement("b")
-        deletebutton.textContent = 'X'
+        deletebutton.textContent = '✗'
         deletebutton.addEventListener("click", () => {this.deleteList(listname, newlistitem)})
         newlistitem.appendChild(deletebutton)
         dom.listDisplay.appendChild(newlistitem)
-        this.saveToLocal()
+        lstorage.saveToLocal()
     },
     changeList: function (listname) {
         this.activeList = listname
@@ -62,9 +62,10 @@ let lists = {
         // To verify list content matches dom
         console.log("List changed. New array below")
         console.log(UserLists[this.activeList])
-        this.saveToLocal()
+        lstorage.saveToLocal()
     },
     // TASK HANDLING, MOVE TO DOM OBJECT LATER!!!
+    // no lole - future me
     returnActiveTasks: function () {
         return UserLists[this.activeList];
     },
@@ -81,7 +82,7 @@ let lists = {
             newlistitem.remove()
             // Verify object clean
             console.log("List deleted, dev verify object clean")
-            console.log(this)
+            console.log(UserLists)
             // If that was the last list, make a new fallback one
             let indexinlistlist = this.listlist.indexOf(listname)
             if (indexinlistlist > -1) {
@@ -95,7 +96,7 @@ let lists = {
             if (listname == this.activeList) {
                 this.changeList(this.listlist[0])
             }
-            this.saveToLocal()
+            lstorage.saveToLocal()
     },
     appendAll: function () {
         UserLists[this.activeList].forEach(item => {
@@ -107,29 +108,9 @@ let lists = {
             dom.mainEl.removeChild(dom.mainEl.firstChild);
         }
     },
-    saveToLocal: function () {
-        // console.log("Saving to local...")
-        let localfriendly = {}
-        this.listlist.forEach(listname => {
-            localfriendly[listname] = []
-            UserLists[listname].forEach(task => {
-                let fname = task.name
-                let fdesc = task.desc
-                let fdue = task.due
-                let fimp = task.prio
-                let fcomp = task.completed
-                let friendlyTask = {name: fname, desc: fdesc, due: fdue, prio: fimp , completed: fcomp}
-                localfriendly[listname].push(friendlyTask)
-            })
-        })
-    // console.log(localfriendly)
-    localStorage.setItem("UserLists", JSON.stringify(localfriendly))
-    }
 }
 
 let UserLists = {}
 console.log(UserLists)
-
-//Todo: read the sticky notes im going to screamfsd fsdbjsdfjiksdfgjhsdjkldlkjfdjkndfs
 
 export {lists, UserLists}

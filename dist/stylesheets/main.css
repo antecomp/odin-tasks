@@ -1,3 +1,4 @@
+/* >446 Line CSS File */
 * {
     margin: 0;
     box-sizing: border-box;
@@ -248,6 +249,8 @@ form {
 .taskname {
     color: mediumseagreen;
     cursor: text;
+    width: fit-content;
+    width: -moz-fit-content;
 }
 
 .desc {
@@ -436,6 +439,10 @@ header h3 {
     cursor: pointer;
 }
 
-/* oh heck oh golly oh crud oh frick this trick doesn't work on firefox
-dfdsjkflfhshidifjdsihfjkdskjfbjkdshjkfhdsjkhfkjhdskfhuds
-fixxxxxx AAAAAAAAAAAAAAAAAAAAAAa */
+
+/* Detect firefox, since it doesn't like my little psuedo-element scaling trick */
+@supports ( -moz-appearance:none ){
+    #newtaskprompt input[type="checkbox"] {
+        transform: none;
+    }
+  }
