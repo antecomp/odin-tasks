@@ -27,8 +27,8 @@ let dom = {
         let inputteddesc = element.elements["newtaskdesc"].value
         let inputteddate = element.elements["newtaskdue"].value
         let important = element.elements["importance"].checked
-        // Still need radio to mark as important!!
-        lists.addtask(lists.activeList, inputtedname, inputteddesc, inputteddate, important)
+        // false at the end, new tasks aren't completed
+        lists.addtask(lists.activeList, inputtedname, inputteddesc, inputteddate, important, false)
         element.elements["newtaskname"].value = ""
         element.elements["newtaskdesc"].value = ""
         element.elements["newtaskdue"].value = ""
@@ -47,12 +47,16 @@ let dom = {
     },
     // Add event listeners to each of the elements
     init: function () {
-        this.listinfobutton.addEventListener("click", this.listinfo)
+       // this.listinfobutton.addEventListener("click", this.listinfo)
         this.taskform.style.display = "none"
         this.newtaskbutton.addEventListener("click", this.toggleTaskForm)
         this.newtaskform.addEventListener("submit", () => {this.newtask(dom.newtaskform)})
         this.closetaskform.addEventListener("click", this.toggleTaskForm)
         this.newlistform.addEventListener("submit", this.newlist)
+        /* // Debug, force save to localstorage
+        let savetest = document.querySelector("#save")
+        savetest.addEventListener("click", () => {lists.saveToLocal()})
+        */
     }
 }
 

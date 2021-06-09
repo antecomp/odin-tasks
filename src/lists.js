@@ -1,19 +1,21 @@
 import {dom} from "./dom.js"
+import {task} from "./tasks.js"
 
 let lists = {
     // default: [],
     activeList: "",
     listlist: [], // I love this stupid name
-    addtask: function (listname, taskname, taskdesc, taskdue, taskprio) {
+    addtask: function (listname, taskname, taskdesc, taskdue, taskprio, taskcomplete) {
         // Pass This Objects Index Into the task param
-        let passedIndex = this[this.activeList].length
-        let newTask = new task(taskname, taskdesc, taskdue, taskprio, this[this.activeList])
-        this[listname].push(newTask);
-        this.appendTask(this[this.activeList][passedIndex])
+        let passedIndex = UserLists[this.activeList].length
+        let newTask = new task(taskname, taskdesc, taskdue, taskprio, UserLists[this.activeList], taskcomplete)
+        UserLists[listname].push(newTask);
+        this.appendTask(UserLists[this.activeList][passedIndex])
+        this.saveToLocal()
     },
     newlist: function (listname) {
-        if(!this[listname]) {
-            this[listname] = [];
+        if(!UserLists[listname]) {
+            UserLists[listname] = [];
             this.listlist.push(listname)
             // console.log(this.listlist)
             this.appendListName(listname)
@@ -22,6 +24,7 @@ let lists = {
         } else {
             alert("List Already Exists")
         }
+        this.saveToLocal()
     },
     highlightActiveList: function (activeitem) {
         let alllistitems = document.querySelectorAll(".somelist")
@@ -48,6 +51,7 @@ let lists = {
         deletebutton.addEventListener("click", () => {this.deleteList(listname, newlistitem)})
         newlistitem.appendChild(deletebutton)
         dom.listDisplay.appendChild(newlistitem)
+        this.saveToLocal()
     },
     changeList: function (listname) {
         this.activeList = listname
@@ -57,11 +61,12 @@ let lists = {
         this.highlightActiveList(stupidbs)
         // To verify list content matches dom
         console.log("List changed. New array below")
-        console.log(this[this.activeList])
+        console.log(UserLists[this.activeList])
+        this.saveToLocal()
     },
     // TASK HANDLING, MOVE TO DOM OBJECT LATER!!!
     returnActiveTasks: function () {
-        return this[this.activeList];
+        return UserLists[this.activeList];
     },
     appendTask: function (item) {
         dom.mainEl.appendChild(item.renderSelf())
@@ -71,7 +76,7 @@ let lists = {
             // Dont call the change list method on click (parent event) (prevent ubbling)
             event.stopPropagation();
             // Remove From Object
-            delete this[listname]
+            delete UserLists[listname]
             // Remove from DOM
             newlistitem.remove()
             // Verify object clean
@@ -90,9 +95,10 @@ let lists = {
             if (listname == this.activeList) {
                 this.changeList(this.listlist[0])
             }
+            this.saveToLocal()
     },
     appendAll: function () {
-        this[this.activeList].forEach(item => {
+        UserLists[this.activeList].forEach(item => {
             dom.mainEl.appendChild(item.renderSelf())
         });
     },
@@ -100,109 +106,30 @@ let lists = {
         while(dom.mainEl.firstChild) {
             dom.mainEl.removeChild(dom.mainEl.firstChild);
         }
+    },
+    saveToLocal: function () {
+        // console.log("Saving to local...")
+        let localfriendly = {}
+        this.listlist.forEach(listname => {
+            localfriendly[listname] = []
+            UserLists[listname].forEach(task => {
+                let fname = task.name
+                let fdesc = task.desc
+                let fdue = task.due
+                let fimp = task.prio
+                let fcomp = task.completed
+                let friendlyTask = {name: fname, desc: fdesc, due: fdue, prio: fimp , completed: fcomp}
+                localfriendly[listname].push(friendlyTask)
+            })
+        })
+    // console.log(localfriendly)
+    localStorage.setItem("UserLists", JSON.stringify(localfriendly))
     }
 }
 
+let UserLists = {}
+console.log(UserLists)
 
+//Todo: read the sticky notes im going to screamfsd fsdbjsdfjiksdfgjhsdjkldlkjfdjkndfs
 
-
-
-class task {
-    // Add ability to recieve index to be used in functions
-    constructor(name, desc, due, prio, list) {
-            this.name = name // String
-            this.desc = desc // String
-            this.due = due   // String
-            this.prio = prio // Boolean (High Prio or Not)
-            this.completed = false
-            this.hostlist = list
-    }
-    togglecomplete(checkbox) {
-        if(checkbox.target.checked) { 
-            this.completed = true
-       } else {
-           this.completed = false
-       }
-       // console.log(this.completed)
-    }
-    // REPLACE THE TEXTBOX WITH A BUTTON THAT TOGGLE this.completed AND THEN HAVE renderSelf() 
-    // APPLY STRIKETHROUGH TO EVERYTHING IF ITS COMPLETED
-    renderSelf(parent) {
-        let taskcontainer = document.createElement("div")
-        taskcontainer.classList.add("task")
-        if(this.prio) taskcontainer.classList.add("priohigh")
-        // I hate this
-        // Task left
-        let taskleft = document.createElement("div")
-        // taskleft.innerHTML = `<input type="checkbox">`
-        taskleft.classList.add("taskleft")
-        let completedbox = document.createElement("input")
-        completedbox.setAttribute("type","checkbox")
-        // You will need to add a method for setting the checkbox based on the completed state
-        // Since re-rendering the card (such as switching lists) will remove the "checked" state of the box.
-        completedbox.addEventListener("change", (e) => {this.togglecomplete(e)})
-        taskleft.appendChild(completedbox)
-        taskcontainer.appendChild(taskleft)
-        // Task Center
-        let taskcenter = document.createElement("div")
-        taskcenter.classList.add("taskcenter")
-        // Everything inside task center
-        let taskname = document.createElement("h3")
-        taskname.innerText = this.name
-        taskname.classList.add("taskname")
-        taskcenter.appendChild(taskname)
-        // EDIT TASKNAME
-        // https://stackoverflow.com/questions/1391278/contenteditable-change-events
-        taskname.contentEditable = true
-        const nameObserver = new MutationObserver((mutationRecords) => {
-            this.name = mutationRecords[0].target.data
-            // console.log(this.name)
-        })
-        nameObserver.observe(taskname, {
-            characterData: true,
-            subtree: true
-        })
-        // -------
-        let taskdesc = document.createElement("p")
-        taskdesc.innerText = this.desc
-        taskdesc.classList.add("desc")
-        taskcenter.appendChild(taskdesc)
-        // EDIT DESC
-        taskdesc.contentEditable = true
-        const descObserver = new MutationObserver((mutationRecords) => {
-            this.desc = mutationRecords[0].target.data
-        })
-        descObserver.observe(taskdesc, {
-            characterData: true,
-            subtree: true
-        })
-        // ---------
-        let taskdue = document.createElement("p")
-        taskdue.innerText = this.due
-        taskdue.classList.add("duedate")
-        taskcenter.appendChild(taskdue)
-        // Append Taskcenter
-        taskcontainer.appendChild(taskcenter)
-        // Task Right
-        let taskright = document.createElement("div")
-        taskright.classList.add("taskright")
-        taskright.innerText = "✗"
-        taskright.addEventListener("click", () => {
-            // Oh that was easier than I thought. Remove from DOM
-            taskcontainer.remove();
-            // Remove from array -- https://stackoverflow.com/questions/6658223/javascript-item-splice-self-out-of-list
-            // You may want to add a function param that the list can pass itself as
-            // in lists: appendChild(item.renderSelf(this))
-            // in here: passedList <- from passed param.   passedList[passedList.activeList]....
-            this.hostlist.splice(this.hostlist.indexOf(this), 1)
-            // Verify array is clean
-            // console.log("Task deleted: New array below")
-            // console.log(lists[lists.activeList])
-        })
-        taskcontainer.appendChild(taskright)
-        return taskcontainer;
-    }
-}
-
-
-export {lists, task}
+export {lists, UserLists}
