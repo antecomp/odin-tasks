@@ -184,7 +184,15 @@ form {
     align-items: center;
     background-color: var(--altbgc);
     border-radius: 17px 0 0 5px;
+    transition: background-color ease-in-out 0.2s;
 }
+
+.taskleft:hover {
+    background-color: mediumseagreen; 
+    cursor: pointer;
+    color: black;
+ }
+ 
 
 /* .priohigh .taskleft, .priohigh .taskright {
     background: #691323;
@@ -196,6 +204,11 @@ form {
 
 .priohigh .taskname {
     color: rgb(216, 24, 65);
+}
+
+.completed > .taskcenter {
+    text-decoration: line-through;
+    pointer-events: none;
 }
 
 /* I hate checkboxes */
@@ -227,7 +240,6 @@ form {
     background: var(--empc);
     border-color: var(--empc);
   }
-
 .taskcenter {
     padding: 2ch;
     background-color: var(--bglighter);
@@ -290,7 +302,7 @@ form {
     color: var(--textc);
     border: none;
     padding: 2ch;
-    border-radius: 10px;
+    border-radius: 40%;
     transform: translateX(-50%);
     position: relative;
     right: 5%;
@@ -298,6 +310,10 @@ form {
     cursor: pointer;
     bottom: 5%;
     position: fixed;
+    font-size: 1.15rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 #newtask:hover {
